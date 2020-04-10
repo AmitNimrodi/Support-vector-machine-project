@@ -1,7 +1,7 @@
 from single_point import (parse, work_class_values, education_values, marital_status_values,
                           occupation_values, relationship_values, sex_values, race_values, native_country_values)
 
-salary_values = ['<=50K', '>50K']
+salary_values = ['<=50K', '>50K', '<=50K.', '>50K.']
 
 
 # Here you need to implement the parser, don't forget to handle missing data...
@@ -9,7 +9,6 @@ def parse_data(data_file_full_path):
     """ This method parses the data into the final matrix [M x N] - called X matrix.
         and Nx1 vector of classifier results - Y vector.
     """
-
     f = open(data_file_full_path)
     final_x_matrix = list()
     final_y_vector = list()
@@ -17,13 +16,12 @@ def parse_data(data_file_full_path):
     for line in lines:
         #creates a list presentation of 'lines', with the relevant values for each attribute/feature
         line_list_presentation = line.replace(',', '').replace('\n', '').split(' ')
-
         try:
             #test whether it holds valid data and fix relevant attributes values if possible
             line_list_presentation = data_valid_fixer(line_list_presentation)
         except ValueError:
             continue
-        x,y_value=parse(line_list_presentation)
+        x, y_value = parse(line_list_presentation)
         #append returned vector to x matrix, and return result to y vector
         final_x_matrix.append(x)
         final_y_vector.append(y_value)
@@ -54,4 +52,3 @@ def data_valid_fixer(attributes):
     return attributes
 
 
-x_matrix, y_vector = parse_data("data\\adult.data")
